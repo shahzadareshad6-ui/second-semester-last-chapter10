@@ -1,0 +1,76 @@
+public class Time {
+
+    private int hour;
+    private int minute;
+    private int second;
+
+    // No-arg constructor (current GMT time)
+    public Time() {
+        this(System.currentTimeMillis());
+    }
+
+    // Constructor with elapsed time
+    public Time(long elapseTime) {
+        setTime(elapseTime);
+    }
+
+    // Constructor with hour, minute, second
+    public Time(int hour, int minute, int second) {
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
+    }
+
+    // getters
+    public int getHour() {
+        return hour;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
+
+    public int getSecond() {
+        return second;
+    }
+
+    // set time using elapsed milliseconds
+    public void setTime(long elapseTime) {
+
+        long totalSeconds = elapseTime / 1000;
+
+        second = (int) (totalSeconds % 60);
+        long totalMinutes = totalSeconds / 60;
+
+        minute = (int) (totalMinutes % 60);
+        long totalHours = totalMinutes / 60;
+
+        hour = (int) (totalHours % 24);
+    }
+}
+
+
+public class TestTime {
+
+    public static void main(String[] args) {
+
+        // current time
+        Time t1 = new Time();
+
+        // elapsed time constructor
+        Time t2 = new Time(555550000L);
+
+        // manual time
+        Time t3 = new Time(5, 23, 55);
+
+        System.out.println("t1: " + format(t1));
+        System.out.println("t2: " + format(t2));
+        System.out.println("t3: " + format(t3));
+    }
+
+    public static String format(Time t) {
+        return t.getHour() + ":" +
+               t.getMinute() + ":" +
+               t.getSecond();
+    }
+}
