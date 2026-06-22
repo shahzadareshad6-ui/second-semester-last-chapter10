@@ -1,0 +1,85 @@
+import java.util.Scanner;
+
+class Account {
+    private int id;
+    private double balance;
+
+    public Account(int id, double balance) {
+        this.id = id;
+        this.balance = balance;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void withdraw(double amount) {
+        if (amount <= balance) {
+            balance -= amount;
+        } else {
+            System.out.println("Insufficient balance!");
+        }
+    }
+
+    public void deposit(double amount) {
+        balance += amount;
+    }
+}
+
+public class ATM {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        Account[] accounts = new Account[10];
+        for (int i = 0; i < 10; i++) {
+            accounts[i] = new Account(i, 100);
+        }
+
+        while (true) {
+            System.out.print("Enter an id (0–9): ");
+            int id = input.nextInt();
+
+            if (id < 0 || id > 9) {
+                System.out.println("Invalid id. Try again.");
+                continue;
+            }
+
+            Account currentAccount = accounts[id];
+
+            int choice;
+            do {
+                System.out.println("\nMain Menu");
+                System.out.println("1: View Balance");
+                System.out.println("2: Withdraw");
+                System.out.println("3: Deposit");
+                System.out.println("4: Exit");
+                System.out.print("Enter choice: ");
+                choice = input.nextInt();
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("Balance: $" + currentAccount.getBalance());
+                        break;
+                    case 2:
+                        System.out.print("Enter amount: ");
+                        currentAccount.withdraw(input.nextDouble());
+                        break;
+                    case 3:
+                        System.out.print("Enter amount: ");
+                        currentAccount.deposit(input.nextDouble());
+                        break;
+                    case 4:
+                        System.out.println("Exiting account...");
+                        break;
+                    default:
+                        System.out.println("Invalid choice!");
+                }
+
+            } while (choice != 4);
+        }
+    }
+}
